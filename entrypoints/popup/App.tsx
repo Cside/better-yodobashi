@@ -19,7 +19,11 @@ function App() {
     queryKey: ["settings", "showsPrProducts"],
     queryFn: async () => {
       const value = await storage.getItem<boolean>("local:showsPrProducts");
-      return value ?? false;
+      return (
+        value ??
+        // TODO 定数化
+        false
+      );
     },
   });
 
@@ -30,7 +34,11 @@ function App() {
       const value = await storage.getItem<"show" | "dim" | "hide">(
         "local:showsOutOfStockProducts"
       );
-      return value ?? "dim";
+      return (
+        value ??
+        // TODO 定数化
+        "dim"
+      );
     },
   });
 
