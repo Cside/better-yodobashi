@@ -1,0 +1,31 @@
+.by-stock-status-container {
+  position: absolute;
+  top: 70px;
+  left: 30px;
+  font-weight: bold;
+}
+.productListTile {
+  position: relative;
+}
+
+.by-stock-status-message {
+  font-size: 35px;
+  -webkit-text-stroke: 10px white;
+  paint-order: stroke;
+}
+.by-stock-status-secondary-message {
+  font-size: 15px;
+  -webkit-text-stroke: 5px white;
+  paint-order: stroke;
+}
+
+.productListTile:is(
+    [data-by-stock-status="out-of-stock"],
+    [data-by-stock-status="discontinued"],
+    [data-by-stock-status="in-stores-only"]
+  )
+  > :not(.by-stock-status-container) {
+  [data-by-shows-out-of-stock-products="dim"] & {
+    opacity: 0.3;
+  }
+}
