@@ -1,35 +1,34 @@
 import ReactDOMServer from "react-dom/server";
 import type { JSX } from "react/jsx-runtime";
-import { storage } from "wxt/storage";
-import { getOutOfStockProductsDisplay } from "../storageForSettings";
+import {
+  getOutOfStockProductsDisplay,
+  getPrProductsDisplay,
+} from "../storageForSettings";
 import "./style.css";
 
 export default defineContentScript({
   matches: ["https://www.yodobashi.com/*"],
 
   async main() {
+    const prProductsDisplay = await getPrProductsDisplay();
+    const outOfStockProductsDisplay = await getOutOfStockProductsDisplay();
+
     // ==================================================
     // 設定値を body に書く
     // ==================================================
     document.body.setAttribute(
       "data-by-shows-pr-products",
-      String(
-        (await storage.getItem<boolean>("local:PrProductsDisplay")) ?? false
-      )
-    ); // TODO 定数化
+      String(prProductsDisplay)
+    );
 
     document.body.setAttribute(
       "data-by-shows-out-of-stock-products",
-      (await storage.getItem<"show" | "dim" | "hide">(
-        "local:outOfStockProductsDisplay"
-      )) ?? "dim"
-    ); // TODO 定数化
+      outOfStockProductsDisplay
+    );
 
     // ==================================================
     // 在庫状況を表示
     // ==================================================
-    const shouldDimOutOfStockProducts =
-      (await getOutOfStockProductsDisplay()) === "dim";
 
     for (const $product of document.querySelectorAll<HTMLElement>(
       ".js_productBox" // .productListTile でも良い
@@ -44,6 +43,9 @@ export default defineContentScript({
         );
         continue;
       }
+
+      const shouldDimOutOfStockProducts = outOfStockProductsDisplay === "dim";
+
       if (stockInfo.includes("お取り寄せ")) {
         if (shouldDimOutOfStockProducts)
           appendStockStatus($product, "在庫なし", "お取り寄せ");

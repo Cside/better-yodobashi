@@ -1,9 +1,11 @@
+/* 「在庫なし」のメッセージ */
 .by-stock-status-container {
   position: absolute;
   top: 70px;
   left: 30px;
   font-weight: bold;
 }
+
 .productListTile {
   position: relative;
 }
@@ -19,6 +21,7 @@
   paint-order: stroke;
 }
 
+/* 在庫なし諸王品を薄くする */
 .productListTile:is(
     [data-by-stock-status="out-of-stock"],
     [data-by-stock-status="discontinued"],
