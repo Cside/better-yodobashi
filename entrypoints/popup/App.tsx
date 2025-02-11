@@ -11,7 +11,7 @@ import {
   getPrProductsDisplay,
   setOutOfStockProductsDisplay,
   setPrProductsDisplay,
-} from "../storageForSettings";
+} from "../storage/settings";
 import "./App.css";
 
 function App() {

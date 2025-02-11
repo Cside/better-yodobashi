@@ -21,14 +21,19 @@
   paint-order: stroke;
 }
 
-/* 在庫なし諸王品を薄くする */
 .productListTile:is(
     [data-by-stock-status="out-of-stock"],
     [data-by-stock-status="discontinued"],
     [data-by-stock-status="in-stores-only"]
-  )
-  > :not(.by-stock-status-container) {
-  [data-by-shows-out-of-stock-products="dim"] & {
-    opacity: 0.3;
+  ) {
+  /* 在庫なし商品を薄くする */
+  & > :not(.by-stock-status-container) {
+    [data-by-shows-out-of-stock-products="dim"] & {
+      opacity: 0.3;
+    }
+  }
+  /* 在庫なし商品を非表示にする */
+  [data-by-shows-out-of-stock-products="hide"] & {
+    display: none;
   }
 }
