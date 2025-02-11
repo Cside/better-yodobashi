@@ -28,12 +28,12 @@ function App() {
   });
 
   // 在庫商品の設定を取得
-  const { data: showsOutOfStockProducts } = useSuspenseQuery({
-    queryKey: ["settings", "showsOutOfStockProducts"],
+  const { data: outOfStockDisplay } = useSuspenseQuery({
+    queryKey: ["settings", "outOfStockDisplay"],
     queryFn: async () => {
       const value = await storage.getItem<"show" | "dim" | "hide">(
-        "local:showsOutOfStockProducts"
-      );
+        "local:outOfStockDisplay"
+      ); // TODO: 共通化
       return (
         value ??
         // TODO 定数化
@@ -58,12 +58,12 @@ function App() {
   // 在庫商品の設定を更新
   const updateStockProductsMutation = useMutation({
     mutationFn: async (newValue: "show" | "dim" | "hide") => {
-      await storage.setItem("local:showsOutOfStockProducts", newValue);
+      await storage.setItem("local:outOfStockDisplay", newValue);
       return newValue;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["settings", "showsOutOfStockProducts"],
+        queryKey: ["settings", "outOfStockDisplay"],
       });
     },
   });
@@ -91,7 +91,7 @@ function App() {
             <th>在庫がない（お取り寄せ）商品</th>
             <td>
               <select
-                value={showsOutOfStockProducts}
+                value={outOfStockDisplay}
                 onChange={(e) =>
                   updateStockProductsMutation.mutate(
                     e.target.value as "show" | "dim" | "hide"

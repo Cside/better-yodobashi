@@ -18,13 +18,17 @@ export default defineContentScript({
     document.body.setAttribute(
       "data-by-shows-out-of-stock-products",
       (await storage.getItem<"show" | "dim" | "hide">(
-        "local:showsOutOfStockProducts"
+        "local:outOfStockDisplay"
       )) ?? "dim"
     ); // TODO 定数化
 
     // ==================================================
-    // 在庫状況を取得
+    // 在庫状況を表示
     // ==================================================
+    const outOfStockDisplay = await storage.getItem<"show" | "dim" | "hide">(
+      "local:outOfStockDisplay"
+    ); // TODO: 共通化
+
     for (const $product of document.querySelectorAll<HTMLElement>(
       ".js_productBox" // .productListTile でも良い
     )) {
