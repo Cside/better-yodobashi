@@ -1,28 +1,31 @@
-/*「お取り寄せ」を消す ==================================== */
-/* ランキング */
-.listContentsLine:has(
-    :where(
-        /* 在庫なし */
-        .stockInfo .red,
-        /* 販売終了 */
-        .js_addLatestSalesOrder li:nth-child(3) .gray
-    )
-),
-/* 検索ページ */
-.js_productBox:has(.js_addLatestSalesOrder li:nth-child(4) :where(.red, .gray)) {
-  /* display: none; */
-  [data-by-shows-out-of-stock-products="dim"] & {
-    opacity: 0.3;
-  }
-  [data-by-shows-out-of-stock-products="hide"] & {
-    display: none;
-  }
+.by-stock-status-container {
+  position: absolute;
+  top: 70px;
+  left: 30px;
+  font-weight: bold;
+}
+.productListTile {
+  position: relative;
 }
 
-/* PR を消す ========================= */
-[data-by-shows-pr-products="true"] {
-  .js_legoPartsProductCarousel:has(.cmr-prodgroup-header) {
-    /* display: none; */
-    background-color: yellow;
+.by-stock-status-message {
+  font-size: 35px;
+  -webkit-text-stroke: 10px white;
+  paint-order: stroke;
+}
+.by-stock-status-secondary-message {
+  font-size: 15px;
+  -webkit-text-stroke: 5px white;
+  paint-order: stroke;
+}
+
+.productListTile:is(
+    [data-by-stock-status="out-of-stock"],
+    [data-by-stock-status="discontinued"],
+    [data-by-stock-status="in-stores-only"]
+  )
+  > :not(.by-stock-status-container) {
+  [data-by-shows-out-of-stock-products="dim"] & {
+    opacity: 0.3;
   }
 }
