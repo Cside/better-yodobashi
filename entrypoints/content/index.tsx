@@ -12,22 +12,24 @@ export default defineContentScript({
     // ==================================================
     document.body.setAttribute(
       "data-by-shows-pr-products",
-      String((await storage.getItem<boolean>("local:showsPrProducts")) ?? false)
+      String(
+        (await storage.getItem<boolean>("local:PrProductsDisplay")) ?? false
+      )
     ); // TODO 定数化
 
     document.body.setAttribute(
       "data-by-shows-out-of-stock-products",
       (await storage.getItem<"show" | "dim" | "hide">(
-        "local:outOfStockDisplay"
+        "local:outOfStockProductsDisplay"
       )) ?? "dim"
     ); // TODO 定数化
 
     // ==================================================
     // 在庫状況を表示
     // ==================================================
-    const outOfStockDisplay = await storage.getItem<"show" | "dim" | "hide">(
-      "local:outOfStockDisplay"
-    ); // TODO: 共通化
+    const outOfStockProductsDisplay = await storage.getItem<
+      "show" | "dim" | "hide"
+    >("local:outOfStockProductsDisplay"); // TODO: 共通化
 
     for (const $product of document.querySelectorAll<HTMLElement>(
       ".js_productBox" // .productListTile でも良い

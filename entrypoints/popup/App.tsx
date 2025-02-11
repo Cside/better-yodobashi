@@ -15,10 +15,10 @@ function App() {
   const queryClient = useQueryClient();
 
   // PR商品の設定を取得
-  const { data: showsPrProducts } = useSuspenseQuery({
-    queryKey: ["settings", "showsPrProducts"],
+  const { data: PrProductsDisplay } = useSuspenseQuery({
+    queryKey: ["settings", "PrProductsDisplay"],
     queryFn: async () => {
-      const value = await storage.getItem<boolean>("local:showsPrProducts");
+      const value = await storage.getItem<boolean>("local:PrProductsDisplay");
       return (
         value ??
         // TODO 定数化
@@ -28,12 +28,12 @@ function App() {
   });
 
   // 在庫商品の設定を取得
-  const { data: outOfStockDisplay } = useSuspenseQuery({
-    queryKey: ["settings", "outOfStockDisplay"],
+  const { data: showsOutOfStockProducts } = useSuspenseQuery({
+    queryKey: ["settings", "showsOutOfStockProducts"],
     queryFn: async () => {
       const value = await storage.getItem<"show" | "dim" | "hide">(
-        "local:outOfStockDisplay"
-      ); // TODO: 共通化
+        "local:showsOutOfStockProducts"
+      );
       return (
         value ??
         // TODO 定数化
@@ -45,12 +45,12 @@ function App() {
   // PR商品の設定を更新
   const updatePrProductsMutation = useMutation({
     mutationFn: async (newValue: boolean) => {
-      await storage.setItem("local:showsPrProducts", newValue);
+      await storage.setItem("local:PrProductsDisplay", newValue);
       return newValue;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["settings", "showsPrProducts"],
+        queryKey: ["settings", "PrProductsDisplay"],
       });
     },
   });
@@ -58,12 +58,12 @@ function App() {
   // 在庫商品の設定を更新
   const updateStockProductsMutation = useMutation({
     mutationFn: async (newValue: "show" | "dim" | "hide") => {
-      await storage.setItem("local:outOfStockDisplay", newValue);
+      await storage.setItem("local:showsOutOfStockProducts", newValue);
       return newValue;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["settings", "outOfStockDisplay"],
+        queryKey: ["settings", "showsOutOfStockProducts"],
       });
     },
   });
@@ -77,7 +77,7 @@ function App() {
             <th>PR商品</th>
             <td>
               <select
-                value={showsPrProducts ? "show" : "hide"}
+                value={PrProductsDisplay ? "show" : "hide"}
                 onChange={(e) =>
                   updatePrProductsMutation.mutate(e.target.value === "show")
                 }
@@ -91,7 +91,7 @@ function App() {
             <th>在庫がない（お取り寄せ）商品</th>
             <td>
               <select
-                value={outOfStockDisplay}
+                value={showsOutOfStockProducts}
                 onChange={(e) =>
                   updateStockProductsMutation.mutate(
                     e.target.value as "show" | "dim" | "hide"
