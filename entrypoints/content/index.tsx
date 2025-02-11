@@ -1,7 +1,7 @@
-import { JSX } from "react";
 import ReactDOMServer from "react-dom/server";
+import type { JSX } from "react/jsx-runtime";
 import { storage } from "wxt/storage";
-import { getOutOfStockProductsDisplay } from "../common/storageSettings";
+import { getOutOfStockProductsDisplay } from "../storageForSettings";
 import "./style.css";
 
 export default defineContentScript({
