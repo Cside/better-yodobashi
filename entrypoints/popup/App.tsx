@@ -14,7 +14,7 @@ import {
 } from "../storage/options";
 import "./App.css";
 
-function App() {
+function Options() {
   const queryClient = useQueryClient();
 
   // PR商品の設定を取得
@@ -97,14 +97,19 @@ function App() {
 
 const queryClient = new QueryClient();
 
-function AppWrapper() {
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div>Loading...</div>}>
-        <App />
+        <Options />
+        <p style={{ color: "red" }}>
+          ※ 商品の検索結果ページのみ有効です。
+          <br />
+          &emsp;トップページなどには対応していません。
+        </p>
       </Suspense>
     </QueryClientProvider>
   );
 }
 
-export default AppWrapper;
+export default App;

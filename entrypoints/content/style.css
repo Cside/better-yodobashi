@@ -40,6 +40,15 @@
       opacity: 0.3;
     }
   }
+  &:hover {
+    & > * {
+      opacity: 1 !important;
+    }
+    .by-stock-status-container {
+      display: none;
+    }
+  }
+
   /* 在庫なし商品を非表示にする */
   [data-by-shows-out-of-stock-products="hide"] & {
     display: none;
