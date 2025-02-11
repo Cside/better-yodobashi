@@ -3,7 +3,7 @@ import type { JSX } from "react/jsx-runtime";
 import {
   getOutOfStockProductsDisplay,
   getPrProductsDisplay,
-} from "../storage/settings";
+} from "../storage/options";
 import "./style.css";
 
 export default defineContentScript({

@@ -11,7 +11,7 @@ import {
   getPrProductsDisplay,
   setOutOfStockProductsDisplay,
   setPrProductsDisplay,
-} from "../storage/settings";
+} from "../storage/options";
 import "./App.css";
 
 function App() {
@@ -19,13 +19,13 @@ function App() {
 
   // PR商品の設定を取得
   const { data: prProductsDisplay } = useSuspenseQuery({
-    queryKey: ["settings", "PrProductsDisplay"],
+    queryKey: ["options", "PrProductsDisplay"],
     queryFn: getPrProductsDisplay,
   });
 
   // 在庫商品の設定を取得
   const { data: showsOutOfStockProducts } = useSuspenseQuery({
-    queryKey: ["settings", "showsOutOfStockProducts"],
+    queryKey: ["options", "showsOutOfStockProducts"],
     queryFn: getOutOfStockProductsDisplay,
   });
 
@@ -34,7 +34,7 @@ function App() {
     mutationFn: setPrProductsDisplay,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["settings", "PrProductsDisplay"],
+        queryKey: ["options", "PrProductsDisplay"],
       });
     },
   });
@@ -44,7 +44,7 @@ function App() {
     mutationFn: setOutOfStockProductsDisplay,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["settings", "showsOutOfStockProducts"],
+        queryKey: ["options", "showsOutOfStockProducts"],
       });
     },
   });

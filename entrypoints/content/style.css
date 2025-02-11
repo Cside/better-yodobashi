@@ -1,3 +1,11 @@
+/* PR を消す ========================= */
+[data-by-shows-pr-products="true"] {
+  .js_legoPartsProductCarousel:has(.cmr-prodgroup-header) {
+    /* display: none; */
+    background-color: yellow;
+  }
+}
+
 /* 「在庫なし」のメッセージ */
 .by-stock-status-container {
   position: absolute;
