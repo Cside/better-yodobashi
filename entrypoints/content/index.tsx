@@ -1,6 +1,7 @@
 import { JSX } from "react";
 import ReactDOMServer from "react-dom/server";
 import { storage } from "wxt/storage";
+import { getOutOfStockProductsDisplay } from "../common/storageSettings";
 import "./style.css";
 
 export default defineContentScript({
@@ -27,9 +28,8 @@ export default defineContentScript({
     // ==================================================
     // 在庫状況を表示
     // ==================================================
-    const outOfStockProductsDisplay = await storage.getItem<
-      "show" | "dim" | "hide"
-    >("local:outOfStockProductsDisplay"); // TODO: 共通化
+    const shouldDimOutOfStockProducts =
+      (await getOutOfStockProductsDisplay()) === "dim";
 
     for (const $product of document.querySelectorAll<HTMLElement>(
       ".js_productBox" // .productListTile でも良い
@@ -44,19 +44,17 @@ export default defineContentScript({
         );
         continue;
       }
-      // お取り寄せ
       if (stockInfo.includes("お取り寄せ")) {
-        console.log("お取り寄せ");
-        // TODO dim ならやらない
-        appendStockStatus($product, "在庫なし", "お取り寄せ");
+        if (shouldDimOutOfStockProducts)
+          appendStockStatus($product, "在庫なし", "お取り寄せ");
         $product.setAttribute("data-by-stock-status", "out-of-stock");
       } else if (stockInfo.includes("販売を終了")) {
-        console.log("販売終了");
-        appendStockStatus($product, "販売終了");
+        if (shouldDimOutOfStockProducts)
+          appendStockStatus($product, "販売終了");
         $product.setAttribute("data-by-stock-status", "discontinued");
       } else if (stockInfo.includes("店頭でのみ販売しています")) {
-        console.log("店頭でのみ販売しています");
-        appendStockStatus($product, "在庫なし", "店頭でのみ販売");
+        if (shouldDimOutOfStockProducts)
+          appendStockStatus($product, "在庫なし", "店頭でのみ販売");
         $product.setAttribute("data-by-stock-status", "in-stores-only");
       } else if (!/在庫(あり|残少)/.test(stockInfo)) {
         // なんも無いやつもある。これとか https://www.yodobashi.com/product/200000000100177517/
