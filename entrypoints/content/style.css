@@ -13,10 +13,6 @@
   font-weight: bold;
 }
 
-.productListTile {
-  position: relative;
-}
-
 .by-stock-status-message {
   font-size: 35px;
   -webkit-text-stroke: 10px white;
@@ -28,28 +24,33 @@
   paint-order: stroke;
 }
 
-.productListTile:is(
-    [data-by-stock-status="out-of-stock"],
-    [data-by-stock-status="discontinued"],
-    [data-by-stock-status="in-stores-only"]
-  ) {
-  /* 在庫なし商品を薄くする */
-  & > :not(.by-stock-status-container) {
-    [data-by-shows-out-of-stock-products="dim"] & {
-      opacity: 0.3;
+.productListTile {
+  position: relative;
+
+  &:is(
+      [data-by-stock-status="out-of-stock"],
+      [data-by-stock-status="discontinued"],
+      [data-by-stock-status="in-stores-only"]
+    ) {
+    /* 在庫なし商品を薄くする */
+    & > :not(.by-stock-status-container) {
+      [data-by-shows-out-of-stock-products="dim"] & {
+        opacity: 0.3;
+      }
     }
-  }
-  &:hover {
-    & > * {
-      opacity: 1 !important;
+    /* hover 時は薄くしない */
+    &:hover {
+      & > * {
+        opacity: 1 !important;
+      }
+      .by-stock-status-container {
+        display: none;
+      }
     }
-    .by-stock-status-container {
+
+    /* 在庫なし商品を非表示にする */
+    [data-by-shows-out-of-stock-products="hide"] & {
       display: none;
     }
-  }
-
-  /* 在庫なし商品を非表示にする */
-  [data-by-shows-out-of-stock-products="hide"] & {
-    display: none;
   }
 }
