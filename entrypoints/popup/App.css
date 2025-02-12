@@ -1,9 +1,26 @@
+:root {
+  color-scheme: light !important; /* wxt の上書き */
+}
 body {
-  padding-left: 20px;
-  padding-bottom: 20px;
+  color: #242424; /* wxt の上書き */
+  background-color: #ffffff; /* wxt の上書き */
+  padding: 15px;
   font-size: 100%;
-  width: 350px;
-  min-height: 300px !important;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+main {
+  width: 360px;
+}
+aside {
+  width: 290px;
+}
+.flex-wrapper {
+  width: 800px;
+  display: flex;
 }
 
 th {

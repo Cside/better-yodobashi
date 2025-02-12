@@ -66,6 +66,10 @@ export default defineContentScript({
   },
 });
 
+// ==================================================
+// Utils
+// ==================================================
+
 const appendStockStatus = (
   $product: HTMLElement,
   stockStatus: string,
@@ -90,3 +94,78 @@ const jsxToHtmlElement = (jsx: JSX.Element): HTMLElement => {
   tempDiv.innerHTML = ReactDOMServer.renderToStaticMarkup(jsx);
   return tempDiv.firstChild as HTMLElement;
 };
+
+// デバッグ用・写真撮影用
+function prepend_DEBUG() {
+  document.querySelector(".js_productBox")?.parentElement?.prepend(
+    (() => {
+      const div = document.createElement("div");
+      div.innerHTML = `<div data-criteo-onview-beacon="" data-criteo-onload-beacon="" data-salesinformationcode="S0002" data-arealimitsalesdisable="false" data-atpscaleindex="0" data-sku="100000001007452601" class="srcResultItem_block pListBlock hznBox js_productBox js_smpClickable js_latestSalesOrderProduct  productListTile">
+  <div class="imgBody">
+    <div style="display:none;" class="imgOverlay js_overlay">
+      <span class="Overlay_txt">明日中にお届けできます</span>
+    </div>
+  </div>
+  <a data-criteo-onclick-beacon="" target="_blank" class="js_productListPostTag js-clicklog js-clicklog_OPT_CALLBACK_POST js-taglog-schRlt js_smpClickableFor cImg js-clicklog-check" href="/product/100000001007452601/">
+    <div class="pImg mb15 ">
+      <img alt="iPad（第10世代） 10.9インチ Wi-Fiモデル 64GB シルバー MPQ03J/A" onerror="this.src='https://image.yodobashi.com/product/NoImage_180x180.jpg';" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOgyseg8ch1hdktD8IHmmPCSirS8r3Qck1FAmuoplLHTROrnG3w-te42IGhD628G1vuUEqiz2RYRFVieisjvj8krKfXim3k7TRuoOgKBCM4YeZC4oYFXZ8Kfx_i9U-6Ok4YVnDKuyRKzm-/s800/computer_tablet1_icon.png">
+    </div>
+    <div class="pName fs14">
+      <p>◯△️電機</p>
+      <p>タブレット 10.9インチ Wi-Fiモデル 64GB シルバー</p>
+    </div>
+  </a>
+  <!-- maker and release date -->
+  <div class="pSubInfo pcParts">
+    <span class="mr10">
+      <a style="" href="/category/157851/165107/165132/165139/165140/m0000000373/?word=%E3%82%BF%E3%83%96%E3%83%AC%E3%83%83%E3%83%88">◯△電機</a>
+    </span>
+    <span class="gray">2022/10/26</span>
+  </div>
+  <div class="pInfo">
+    <ul class="js_addLatestSalesOrder">
+      <li></li>
+      <li>
+        <span class="productPrice">￥52,800</span>
+      </li>
+      <li>
+        <span class="goldPoint orange">528 <span class="unitPointSpace">&nbsp;</span>
+          <span class="orange unitPoint">ゴールドポイント</span>
+          <span class="spNone">（1％還元）</span>
+        </span>
+      </li>
+      <li>
+        <span class="red">お取り寄せ</span>
+      </li>
+    </ul>
+  </div>
+  <div class="avgCR spNone">
+    <div class="valueAvg">
+      <a target="_blank" class="js_productListPostTag iconStarM rate4_5 js-clicklog  js-clicklog_OPT_CALLBACK_POST js-clicklog-check" href="/product/100000001007452601/#productSet6Opened--userEvaluation"></a>
+      <!--
+					-->
+      <span class="fs11 alignM">（ <a target="_blank" class="js_productListPostTag js-clicklog  js-clicklog_OPT_CALLBACK_POST js-clicklog-check" href="/product/100000001007452601/#productSet6Opened--userEvaluation">25</a>） </span>
+    </div>
+  </div>
+  <div class="pcNone">
+    <span class="iconStarS rate4_25"></span>
+    <span class="alignM">（25）</span>
+  </div>
+  <div class="storeStockLink spNone mt05">
+    <a target="_blank" href="/ec/product/stock/100000001007452601/" class="stockOpen">在庫のある店舗</a>（0）
+  </div>
+  <div class="listBC mt10 pcParts">
+    <ul>
+      <li>パソコン・タブレットPC</li>
+      <li>&gt;</li>
+      <li>
+        <a href="/category/19531/11970/172565/172566/?word=%E3%82%BF%E3%83%96%E3%83%AC%E3%83%83%E3%83%88">タブレットPC</a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+      return div.firstChild as HTMLElement;
+    })()
+  );
+}

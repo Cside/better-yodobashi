@@ -50,24 +50,10 @@ function Options() {
   });
 
   return (
-    <>
+    <main>
       <h1>設定</h1>
       <table>
         <tbody>
-          <tr>
-            <th>PR商品</th>
-            <td>
-              <select
-                value={prProductsDisplay ? "show" : "hide"}
-                onChange={(e) =>
-                  updatePrProductsMutation.mutate(e.target.value === "show")
-                }
-              >
-                <option value="show">表示する</option>
-                <option value="hide">表示しない</option>
-              </select>
-            </td>
-          </tr>
           <tr>
             <th>在庫がない（お取り寄せ）商品</th>
             <td>
@@ -86,28 +72,51 @@ function Options() {
             </td>
           </tr>
           <tr>
+            <th>PR商品</th>
+            <td>
+              <select
+                value={prProductsDisplay ? "show" : "hide"}
+                onChange={(e) =>
+                  updatePrProductsMutation.mutate(e.target.value === "show")
+                }
+              >
+                <option value="show">表示する</option>
+                <option value="hide">表示しない</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
             <th>販売終了した商品</th>
             <td>表示しない</td>
           </tr>
         </tbody>
       </table>
-    </>
+      <p style={{ color: "red" }}>
+        ※ 商品の検索結果ページのみ有効です。
+        <br />
+        &emsp;トップページなどには対応していません。
+      </p>
+    </main>
   );
 }
 
 const queryClient = new QueryClient();
 
+import imgDimExample from "/dim-example.webp";
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Options />
-        <p style={{ color: "red" }}>
-          ※ 商品の検索結果ページのみ有効です。
-          <br />
-          &emsp;トップページなどには対応していません。
-        </p>
-      </Suspense>
+      <div className="flex-wrapper">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Options />
+        </Suspense>
+        <aside>
+          <figure>
+            <figcaption>薄く表示する」の例</figcaption>
+            <img src={imgDimExample} alt="" />
+          </figure>
+        </aside>
+      </div>
     </QueryClientProvider>
   );
 }
