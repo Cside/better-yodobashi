@@ -1,6 +1,6 @@
 {
   "name": "ヨドバシ.comの「在庫なし」商品を分かりやすくする",
-  "description": "manifest.json description",
+  "description": "ヨドバシ.comの「在庫なし」商品を分かりやすくする",
   "private": true,
   "version": "0.0.1",
   "type": "module",
