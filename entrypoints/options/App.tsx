@@ -121,7 +121,7 @@ function App() {
         </main>
         <aside>
           <figure>
-            <figcaption>薄く表示する」の例</figcaption>
+            <figcaption>「薄く表示する」の例</figcaption>
             <div className="img-dim-example-container">
               <img src={imgDimExample} alt="" />
             </div>
