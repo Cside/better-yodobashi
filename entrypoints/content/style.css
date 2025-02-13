@@ -29,7 +29,6 @@
 
   &:is(
       [data-by-stock-status="out-of-stock"],
-      [data-by-stock-status="discontinued"],
       [data-by-stock-status="in-stores-only"]
     ) {
     /* 在庫なし商品を薄くする */
@@ -50,7 +49,12 @@
 
     /* 在庫なし商品を非表示にする */
     [data-by-shows-out-of-stock-products="hide"] & {
-      display: none;
+      display: none !important;
     }
+  }
+
+  /* 販売終了商品は問答無用で非表示にする */
+  &[data-by-stock-status="discontinued"] {
+    display: none !important;
   }
 }
