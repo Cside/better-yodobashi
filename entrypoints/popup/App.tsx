@@ -50,7 +50,7 @@ function Options() {
   });
 
   return (
-    <main>
+    <>
       <h1>設定</h1>
       <table>
         <tbody>
@@ -96,7 +96,7 @@ function Options() {
         <br />
         &emsp;トップページなどには対応していません。
       </p>
-    </main>
+    </>
   );
 }
 
@@ -107,9 +107,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex-wrapper">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Options />
-        </Suspense>
+        <main>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Options />
+          </Suspense>
+        </main>
         <aside>
           <figure>
             <figcaption>薄く表示する」の例</figcaption>
