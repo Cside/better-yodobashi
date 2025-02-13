@@ -106,7 +106,7 @@ import imgDimExample from "/dim-example.webp";
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex-wrapper">
+      <div className="flex-container">
         <main>
           <Suspense fallback={<div>Loading...</div>}>
             <Options />
@@ -115,7 +115,9 @@ function App() {
         <aside>
           <figure>
             <figcaption>薄く表示する」の例</figcaption>
-            <img src={imgDimExample} alt="" />
+            <div className="img-dim-example-container">
+              <img src={imgDimExample} alt="" />
+            </div>
           </figure>
         </aside>
       </div>
