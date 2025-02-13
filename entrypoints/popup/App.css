@@ -2,11 +2,18 @@
   color-scheme: light !important; /* wxt の上書き */
 }
 body {
-  color: #242424; /* wxt の上書き */
-  background-color: #ffffff; /* wxt の上書き */
+  /* wxt の上書き */
+  color: #242424;
+  background-color: #ffffff;
+
   padding: 0 15px;
   font-size: 100%;
-  /* width: 680px; */
+
+  &[data-is-popup="false"] {
+    /* wxt の上書き */
+    display: block !important;
+    margin-top: 50px !important;
+  }
 }
 
 h1 {
@@ -22,7 +29,6 @@ aside {
 .flex-container {
   width: 640px;
   display: flex;
-  align-items: start;
 }
 figure {
   margin: 0;
