@@ -9,11 +9,9 @@ body {
   padding: 0 15px;
   font-size: 100%;
 
-  &[data-is-popup="false"] {
-    /* wxt の上書き */
-    display: block !important;
-    margin-top: 50px !important;
-  }
+  /* wxt の上書き（Popupにしたら不要になる） */
+  display: block !important;
+  margin-top: 50px !important;
 }
 
 h1 {

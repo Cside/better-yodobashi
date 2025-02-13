@@ -6,5 +6,6 @@ export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   manifest: {
     permissions: ["storage", "unlimitedStorage"],
+    action: {}, // entrypoints/popup がある場合は不要になる
   },
 });

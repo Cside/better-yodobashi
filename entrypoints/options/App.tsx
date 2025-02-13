@@ -96,6 +96,13 @@ function Options() {
         <br />
         &emsp;トップページなどには対応していません。
       </p>
+      <button
+        type="submit"
+        onClick={() => window.close()}
+        style={{ border: "1px solid #242424" }}
+      >
+        設定を保存する
+      </button>
     </>
   );
 }
