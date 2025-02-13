@@ -51,8 +51,6 @@ export default defineContentScript({
           appendStockStatus($product, "在庫なし", "お取り寄せ");
         $product.setAttribute("data-by-stock-status", "out-of-stock");
       } else if (stockInfo.includes("販売を終了")) {
-        if (shouldDimOutOfStockProducts)
-          appendStockStatus($product, "販売終了");
         $product.setAttribute("data-by-stock-status", "discontinued");
       } else if (stockInfo.includes("店頭でのみ販売しています")) {
         if (shouldDimOutOfStockProducts)
