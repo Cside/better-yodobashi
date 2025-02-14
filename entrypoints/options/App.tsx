@@ -101,7 +101,7 @@ function Options() {
         onClick={() => window.close()}
         style={{ border: "1px solid #242424" }}
       >
-        設定を保存する
+        設定を保存して閉じる
       </button>
     </>
   );
