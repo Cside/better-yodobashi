@@ -81,7 +81,12 @@ const appendStockStatus = (
   }
   $product.append(
     jsxToHtmlElement(
-      <a href={href} className="by-stock-status-container-link">
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="by-stock-status-container-link"
+      >
         <div className="by-stock-status-message">{stockStatus}</div>
         {secondaryMessage && (
           <div className="by-stock-status-secondary-message">
