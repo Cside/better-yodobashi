@@ -1,6 +1,17 @@
+/* wxt の上書き
+  https://github.com/wxt-dev/wxt/blob/5775c9ce0f025998dda53fec95476d943e7d4f4b/templates/react/entrypoints/popup/style.css#L58-L69 */
 :root {
-  color-scheme: light !important; /* wxt の上書き */
+  color: #213547 !important;
+  background-color: #ffffff !important;
+  color-scheme: light !important;
 }
+a:hover {
+  color: #747bff !important;
+}
+button {
+  background-color: #f9f9f9 !important;
+}
+
 body {
   /* wxt の上書き */
   color: #242424;
@@ -11,7 +22,7 @@ body {
 
   /* wxt の上書き（Popupにしたら不要になる） */
   display: block !important;
-  margin-top: 50px !important;
+  padding-top: 50px !important;
 }
 
 h1 {
