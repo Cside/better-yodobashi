@@ -6,11 +6,13 @@
 }
 
 /* 「在庫なし」のメッセージ */
-.by-stock-status-container {
+.by-stock-status-container-link {
   position: absolute;
   top: 70px;
   left: 30px;
   font-weight: bold;
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 .by-stock-status-message {
@@ -32,18 +34,9 @@
       [data-by-stock-status="in-stores-only"]
     ) {
     /* 在庫なし商品を薄くする */
-    & > :not(.by-stock-status-container) {
+    & > :not(.by-stock-status-container-link) {
       [data-by-shows-out-of-stock-products="dim"] & {
-        opacity: 0.3;
-      }
-    }
-    /* hover 時は薄くしない */
-    &:hover {
-      & > * {
-        opacity: 1 !important;
-      }
-      .by-stock-status-container {
-        display: none;
+        opacity: 0.5;
       }
     }
 
