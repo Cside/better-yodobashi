@@ -6,65 +6,76 @@ import {
 } from "../storage/options";
 import "./style.css";
 
+const isRankingPage = location.pathname.endsWith("/ranking/");
+
+const main = async () => {
+  const prProductsDisplay = await getPrProductsDisplay();
+  const outOfStockProductsDisplay = await getOutOfStockProductsDisplay();
+
+  // ==================================================
+  // 設定値を body に書く
+  // ==================================================
+  document.body.setAttribute(
+    "data-by-shows-pr-products",
+    String(prProductsDisplay)
+  );
+
+  document.body.setAttribute(
+    "data-by-shows-out-of-stock-products",
+    outOfStockProductsDisplay
+  );
+
+  // ==================================================
+  // 在庫状況を表示
+  // ==================================================
+
+  // セレクタ：
+  // https://www.notion.so/196cb33a6a1f80bdb8dec63cc1bb70b2#196cb33a6a1f80b58812c768532d5239
+
+  for (const $product of document.querySelectorAll<HTMLElement>(
+    isRankingPage ? ".js_productBlock" : ".js_productBox"
+  )) {
+    const stockInfo = $product.querySelector<HTMLElement>(
+      ".pInfo" // だいぶ広いが⋯。.js_addLatestSalesOrder はランキングの「在庫なし」では存在しないため
+    )?.innerText;
+    if (stockInfo === undefined) {
+      console.error("在庫情報(.js_addLatestSalesOrder) is not found", $product);
+      continue;
+    }
+
+    const shouldDimOutOfStockProducts = outOfStockProductsDisplay === "dim";
+
+    if (stockInfo.includes("お取り寄せ")) {
+      if (shouldDimOutOfStockProducts)
+        appendStockStatus($product, "在庫なし", "お取り寄せ");
+      $product.setAttribute("data-by-stock-status", "out-of-stock");
+    } else if (stockInfo.includes("販売を終了")) {
+      $product.setAttribute("data-by-stock-status", "discontinued");
+    } else if (stockInfo.includes("店頭でのみ販売しています")) {
+      if (shouldDimOutOfStockProducts)
+        appendStockStatus($product, "在庫なし", "店頭でのみ販売");
+      $product.setAttribute("data-by-stock-status", "in-stores-only");
+    } else if (!/在庫(あり|残少)/.test(stockInfo)) {
+      // なんも無いやつもある。これとか https://www.yodobashi.com/product/200000000100177517/
+      console.warn("Unknown stock info", stockInfo);
+    }
+  }
+};
+
 export default defineContentScript({
   matches: ["https://www.yodobashi.com/*"],
 
   async main() {
-    const prProductsDisplay = await getPrProductsDisplay();
-    const outOfStockProductsDisplay = await getOutOfStockProductsDisplay();
-
-    // ==================================================
-    // 設定値を body に書く
-    // ==================================================
-    document.body.setAttribute(
-      "data-by-shows-pr-products",
-      String(prProductsDisplay)
-    );
-
-    document.body.setAttribute(
-      "data-by-shows-out-of-stock-products",
-      outOfStockProductsDisplay
-    );
-
-    // ==================================================
-    // 在庫状況を表示
-    // ==================================================
-
-    // セレクタ：
-    // https://www.notion.so/196cb33a6a1f80bdb8dec63cc1bb70b2#196cb33a6a1f80b58812c768532d5239
-
-    for (const $product of document.querySelectorAll<HTMLElement>(
-      location.pathname.endsWith("/ranking/")
-        ? ".js_productBlock"
-        : ".js_productBox"
-    )) {
-      const stockInfo = $product.querySelector<HTMLElement>(
-        ".pInfo" // だいぶ広いが⋯。.js_addLatestSalesOrder はランキングの「在庫なし」では存在しないため
-      )?.innerText;
-      if (stockInfo === undefined) {
-        console.error(
-          "在庫情報(.js_addLatestSalesOrder) is not found",
-          $product
-        );
-        continue;
+    await main();
+    if (isRankingPage) {
+      const $listContainer = document.querySelector(
+        ".js_mainCateRankContainer"
+      );
+      if ($listContainer === null) {
+        console.error(".js-mainCateRankContainer is not found");
+        return;
       }
-
-      const shouldDimOutOfStockProducts = outOfStockProductsDisplay === "dim";
-
-      if (stockInfo.includes("お取り寄せ")) {
-        if (shouldDimOutOfStockProducts)
-          appendStockStatus($product, "在庫なし", "お取り寄せ");
-        $product.setAttribute("data-by-stock-status", "out-of-stock");
-      } else if (stockInfo.includes("販売を終了")) {
-        $product.setAttribute("data-by-stock-status", "discontinued");
-      } else if (stockInfo.includes("店頭でのみ販売しています")) {
-        if (shouldDimOutOfStockProducts)
-          appendStockStatus($product, "在庫なし", "店頭でのみ販売");
-        $product.setAttribute("data-by-stock-status", "in-stores-only");
-      } else if (!/在庫(あり|残少)/.test(stockInfo)) {
-        // なんも無いやつもある。これとか https://www.yodobashi.com/product/200000000100177517/
-        console.warn("Unknown stock info", stockInfo);
-      }
+      new MutationObserver(main).observe($listContainer, { childList: true });
     }
   },
 });
