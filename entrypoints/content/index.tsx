@@ -30,11 +30,16 @@ export default defineContentScript({
     // 在庫状況を表示
     // ==================================================
 
+    // セレクタ：
+    // https://www.notion.so/196cb33a6a1f80bdb8dec63cc1bb70b2#196cb33a6a1f80b58812c768532d5239
+
     for (const $product of document.querySelectorAll<HTMLElement>(
-      ".js_productBox" // .productListTile でも良い
+      location.pathname.endsWith("/ranking/")
+        ? ".js_productBlock"
+        : ".js_productBox"
     )) {
       const stockInfo = $product.querySelector<HTMLElement>(
-        ".js_addLatestSalesOrder" // この親の .pInfo でも良い
+        ".pInfo" // だいぶ広いが⋯。.js_addLatestSalesOrder はランキングの「在庫なし」では存在しないため
       )?.innerText;
       if (stockInfo === undefined) {
         console.error(
