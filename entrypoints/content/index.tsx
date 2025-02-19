@@ -75,6 +75,8 @@ export default defineContentScript({
         console.error(".js-mainCateRankContainer is not found");
         return;
       }
+      // TODO: 毎回、全アイテムに対して実行してしまっているので、重複して実行されているアイテムがある。
+      // 追加されたアイテムのみ実行すべき
       new MutationObserver(main).observe($listContainer, { childList: true });
     }
   },
