@@ -1,6 +1,7 @@
 /* PR を消す ========================= */
 [data-by-shows-pr-products="false"] {
-  .js_legoPartsProductCarousel:has(.cmr-prodgroup-header) {
+  .srcResultPromotionItem, /* 検索結果に埋め込まれるやつ（タブレットとか） */
+  .js_legoPartsProductCarousel:has(.cmr-prodgroup-header) /* ランキングページのカルーセル */ {
     display: none;
   }
 }
