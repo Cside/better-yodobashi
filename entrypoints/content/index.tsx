@@ -75,7 +75,6 @@ const appendStockStatus = (
 ) => {
   const $href =
     $product.querySelector<HTMLAnchorElement>(`a[href^="/product/"]`)?.href;
-  console.log($href, $product);
   if ($href === undefined) {
     console.error("href is not found", $product);
     return;
