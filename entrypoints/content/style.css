@@ -26,7 +26,10 @@
   paint-order: stroke;
 }
 
-.productListTile {
+:where(
+  .js_productBlock, /* ランキング */
+  .js_productBox /* 検索結果 */
+  ) {
   position: relative;
 
   &:is(
