@@ -2,7 +2,7 @@
   "name": "ヨドバシ.comの「在庫なし」商品を分かりやすくする",
   "description": "ヨドバシ.comの「在庫なし」商品を分かりやすくする",
   "private": true,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "scripts": {
     "dev": "wxt || terminal-notifier -message 'wxt failed' -sound Sosumi",
