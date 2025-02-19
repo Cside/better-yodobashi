@@ -73,16 +73,17 @@ const appendStockStatus = (
   stockStatus: string,
   secondaryMessage?: string
 ) => {
-  const href =
+  const $href =
     $product.querySelector<HTMLAnchorElement>(`a[href^="/product/"]`)?.href;
-  if (href === undefined) {
+  console.log($href, $product);
+  if ($href === undefined) {
     console.error("href is not found", $product);
     return;
   }
   $product.append(
     jsxToHtmlElement(
       <a
-        href={href}
+        href={$href}
         target="_blank"
         rel="noreferrer"
         className="by-stock-status-container-link"
